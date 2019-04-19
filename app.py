@@ -3,7 +3,7 @@ from random import random
 from collections import OrderedDict
 from flask import Flask, render_template, request, jsonify, redirect
 
-from forms import TestForm
+from forms import SlickEditableForm
 
 """
 A example for creating a Table that is sortable by its header
@@ -15,9 +15,9 @@ app.config['SECRET_KEY'] = "very_secret_key"
 
 #jdata=json.dumps(data)
 
-@app.route('/', methods=["GET", "POST"])
-def index():
-	form = TestForm()
+@app.route('/slick_editable', methods=["GET", "POST"])
+def slick_editable():
+	form = SlickEditableForm()
 
 	columns = [
 		{"id": "title", "name": "Title", "field": "title", "width": 120, "cssClass": "cell-title", "editor": "Slick.Editors.Text", "validator": "requiredFieldValidator"},
@@ -52,7 +52,7 @@ def index():
 		print(request.values)
 		#print(form.myGrid.data)
 
-	return render_template("table.html", form = form, id = "myGrid", columns = columns, data = data, options = options)
+	return render_template("slick_editable.html", form = form, id = "myGrid", columns = columns, data = data, options = options)
 
 
 if __name__ == '__main__':

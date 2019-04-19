@@ -5,7 +5,7 @@ from wtforms.ext.sqlalchemy.fields import QuerySelectField
 
 from widgets import SlickGrid
 
-class TestForm(FlaskForm):
+class SlickEditableForm(FlaskForm):
 	myGrid = SlickGrid("myGrid", style={"width": "100%", "height": "700px"})
 	submit = SubmitField("Save")
 	data = HiddenField("data")
