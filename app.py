@@ -1,7 +1,9 @@
 import json
 from random import random
 from collections import OrderedDict
-from flask import Flask, render_template
+from flask import Flask, render_template, request, jsonify, redirect
+
+from forms import TestForm
 
 """
 A example for creating a Table that is sortable by its header
@@ -9,10 +11,14 @@ A example for creating a Table that is sortable by its header
 
 app = Flask(__name__)
 
+app.config['SECRET_KEY'] = "very_secret_key"
+
 #jdata=json.dumps(data)
 
-@app.route('/')
+@app.route('/', methods=["GET", "POST"])
 def index():
+	form = TestForm()
+
 	columns = [
 		{"id": "title", "name": "Title", "field": "title", "width": 120, "cssClass": "cell-title", "editor": "Slick.Editors.Text", "validator": "requiredFieldValidator"},
 		{"id": "desc", "name": "Description", "field": "description", "width": 100, "editor": "Slick.Editors.LongText"},
@@ -42,7 +48,11 @@ def index():
 		d["effortDriven"] = (i % 5 == 0);
 		data.append(d)
 
-	return render_template("table.html", id = "myGrid", columns = columns, data = data, options = options)
+	if request.method == "POST":
+		print(request.values)
+		#print(form.myGrid.data)
+
+	return render_template("table.html", form = form, id = "myGrid", columns = columns, data = data, options = options)
 
 
 if __name__ == '__main__':
