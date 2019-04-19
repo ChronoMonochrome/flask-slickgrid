@@ -20,7 +20,7 @@
 </head>
 <body>
 
-<form action="/slick_editable" method=post>
+<form action="{{url_for}}" method=post>
 <div style="position:relative">
   <div style="width:650px;">
     {{ form.myGrid }}
@@ -114,15 +114,21 @@
       console.log(args); 
     });
 
-    $("form").submit(
-      function() {
-        console.log(JSON.stringify(data));
-        $("input[name='data']").val(JSON.stringify(data));
-        return false;
-      }
-    );
+   $("form").on('submit',function (e) {
+     $("input[name='data']").val(JSON.stringify(data));
+     $.ajax({
+      type: 'post',
+      url: '/{{url_for}}',
+      data: $('form').serialize(),
+      success: function (q) {
+       console.log("success!");
+       }
+      });
+     e.preventDefault();
+   });
+	
 
-  })
+})
 
 </script>
 </body>

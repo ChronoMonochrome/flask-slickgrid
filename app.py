@@ -37,7 +37,7 @@ def slick_editable():
 		"autoEdit": False
 	}
 
-	for i in range(500):
+	for i in range(30):
 		d = OrderedDict()
 		d["title"] = "Task %d" % i;
 		d["description"] = "This is a sample task description.\n  It can be multiline";
@@ -49,10 +49,13 @@ def slick_editable():
 		data.append(d)
 
 	if request.method == "POST":
-		print(request.values)
+		print(form.data.data)
+		#print(request.json)
+		#return jsonify(success=True)
+		return render_template("slick_editable.html", form = form, id = "myGrid", url_for = "slick_editable", columns = columns, data = data, options = options)
 		#print(form.myGrid.data)
 
-	return render_template("slick_editable.html", form = form, id = "myGrid", columns = columns, data = data, options = options)
+	return render_template("slick_editable.html", form = form, id = "myGrid", url_for = "slick_editable", columns = columns, data = data, options = options)
 
 
 if __name__ == '__main__':
